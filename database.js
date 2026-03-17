@@ -38,7 +38,7 @@ const criarBanco = async () => {
     ("Vazamento de água", "Rua das Camélias, 52", "Vazamento de água constante próximo ao bueiro.", "Alta", "Julia Martins", "2026-03-16", "10:00"),
     ("Pavimentação", "Avenida C, Bairro D", "Calçada em mau estado", "Alta", "Maria Oliveira", "2026-03-14", "14:30"),
     ("Falta de água", "Rua T, 146, Jardim Imbariê", "Moradores sem água", "Alta", "Dona Fofoca", "2026-03-16", "10:00")
-  `);
+`);
 
   // ============================
   // Select  - R do CRUD - READ
