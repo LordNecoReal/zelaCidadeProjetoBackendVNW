@@ -93,6 +93,9 @@ console.log("Relatório Atualizado (FINAL)")
 const resultadoFinal =await db.all(`SELECT * FROM incidentes`);
 console.table(resultadoFinal)
 
+return db; //Retorna o banco (entregando a chave do banco para alguém)
+
+
 };
 
-criarBanco();
+module.exports = {criarBanco} //Cria uma ponte que permite compartilhar funções entre os arquivos
