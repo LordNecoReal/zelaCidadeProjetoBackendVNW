@@ -61,7 +61,9 @@ const criarBanco = async () => {
   );
   console.table(chamadosAna);
 
-  //UPDATE
+  // ============================
+  // Update  - U do CRUD
+  // ============================
 
   await db.run(`
   UPDATE incidentes
@@ -71,7 +73,7 @@ const criarBanco = async () => {
 
   console.log("Todos as reclamações do dia 16/03/2026 tiveram uma atualização");
 
-  //UPDATE
+  //UPDATE - Resolvido
 
   await db.run(`
   UPDATE incidentes
@@ -80,20 +82,28 @@ const criarBanco = async () => {
   `);
   console.log("Problema do hospital resolvido");
 
-  //DELETE
+  // ============================
+  // Delete  - D do CRUD
+  // ============================
+
   await db.run(`DELETE FROM incidentes WHERE id = 2 `);
 
   console.log("Registro do ID 2 removido");
 
-  //Relatório/SELECT Final
-  //console.log("Relatório Atualizado(FINAL)");
+  //DELETE condicional - Remover tudo que tem o Status da Resolução 'Resolvido' (Limpeza de banco)
+  await db.run(`DELETE FROM incidentes WHERE status_resolucao = 'Resolvido'`);
+  console.log("Registros de status 'Resolvido' foram removidos.");
+
+  // ============================
+  // Relatório/SELECT Fina
+  // ============================
+
+  //  console.log("Relatório Atualizado (FINAL)");
 
   const resultadoFinal = await db.all(`SELECT * FROM incidentes`);
   console.table(resultadoFinal);
 
-return db; //Retorna o banco (Entregando a chabe do banco pra alguém)
+  return db; //Retorna o banco (Entregando a chabe do banco pra alguém)
 };
 
-module.exports = { criarBanco } //Cria uma ponte que permite compartilhar funções entre os arquivos
-
-
+module.exports = { criarBanco }; //Cria uma ponte que permite compartilhar funções entre os arquivos
