@@ -3,7 +3,13 @@
 const express = require("express"); //Framework que cria o servidor e as rotas
 const { criarBanco } = require("./database"); //A chave que vai abrir a conexão com o banco de dados
 
+const cors = require('cors') //Importando o pacote que gerencia as permissões de acesso
+
 const app = express(); //Inicialização: Ligando o motor do servidor
+
+//-------Ativando
+
+app.use((cors)) //Ativando o CORS no servidor
 
 app.use(express.json()); //Tradutor: Configura o Express para entender dados enviados no formato JSON
 
@@ -23,7 +29,9 @@ app.get("/", (req, res) => {
 
 //Porta do servidor
 
-const PORT = 3000;
+//Criando uma variavel inteligente para a porta
+
+const PORT = process.env.PORT || 3000;
 
 //Ligando o Servidor
 app.listen(PORT, () => {
@@ -72,3 +80,23 @@ await db.run(`INSERT INTO incidentes(tipo_problema, localizacao, descricao, prio
 //Envia uma resposta de confirmação para o cliente que fez a requisição
 res.send(`Incidente novo registrado: ${tipo_problema} registrado na data ${data_registro} por ${nome_solicitante} `)
 } )
+
+//ROTA DE ATUALIZAÇÃO: Responsavel por editar um incidente já existente no banco
+app.put('/incidentes/:id', async (req,res) => {
+//Pega o id do incidente que vem pela URL (ex: /incidentes/11)
+const { id } = req.params
+
+const {prioridade,descricao,status_resolucao} = req.body
+//Abre a conexão com o banco de dados
+const db = await criarBanco()
+
+await db.run (`
+  UPDATE incidentes 
+  SET prioridade = ?, descricao = ?, status_resolucao = ?
+  WHERE id = ?
+
+
+  `, [prioridade, descricao, status_resolucao, id])
+res.send(' O incidente de ID ${id} foi atualizado com sucesso!!')
+
+}) 
