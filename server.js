@@ -27,16 +27,6 @@ app.get("/", (req, res) => {
         `);
 });
 
-//Porta do servidor
-
-//Criando uma variavel inteligente para a porta
-
-const PORT = process.env.PORT || 3000;
-
-//Ligando o Servidor
-app.listen(PORT, () => {
-  console.log(`Servidor rodando em http://localhost:${PORT}`);
-});
 
 
 //Rota de Listagem - Para buscar todos os problemas registrados
@@ -50,6 +40,7 @@ const listaIncidentes = await db.all(`SELECT * FROM incidentes`)
 res.json(listaIncidentes) //Entrega esses dados para o cliente em formato JSON
 
 } ) 
+
 
 
 //Rota Específica 
@@ -100,3 +91,14 @@ await db.run (`
 res.send(' O incidente de ID ${id} foi atualizado com sucesso!!')
 
 }) 
+
+//Porta do servidor
+
+//Criando uma variavel inteligente para a porta
+
+const PORT = process.env.PORT || 3000;
+
+//Ligando o Servidor
+app.listen(PORT, () => {
+  console.log(`Servidor rodando em http://localhost:${PORT}`);
+});
